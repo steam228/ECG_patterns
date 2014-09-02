@@ -1,11 +1,14 @@
 
 int numCirc = 20;
-int margem = 10; //pixeis de margem
+int margem = 1; //pixeis de margem
 
 
 void setup() {
   size(640, 480);
-  stroke (255);
+  stroke (100);
+  strokeWeight (1);
+  background(255);
+  smooth();
 
   
 
