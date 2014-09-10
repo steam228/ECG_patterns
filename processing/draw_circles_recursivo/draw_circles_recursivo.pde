@@ -1,23 +1,26 @@
-int raio;
+int diametro, margem;
 
 void setup() {
   size(640,480);
-  raio = 20;
-  frameRate(1);
+  diametro = 25;
+  margem = 6;
+  smooth();
+  //frameRate(30);
 }
  
 void draw() {
   background(255);
-  for (int i=10; i <= height-10; i = i + raio)
-    drawCircle(width-10,i,raio);
+  for (int i = (diametro/2 + margem); i <= (height - diametro/2 - margem); i = (i + diametro + margem))
+    drawCircle(width-diametro/2-margem,i,diametro);
+
 }
  
-void drawCircle(float x, float y, float radius) {
+void drawCircle(float x, float y, float diam) {
   stroke(0);
   noFill();
-  ellipse(x, y, radius, radius);
-  if(x > radius){
-    drawCircle(x - radius, y, radius);  
+  ellipse(x, y, diam, diam);
+  if(x - diam - margem > diam/2 + margem){
+    drawCircle(x - diam - margem, y, diam);  
   }
  
 }
