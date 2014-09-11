@@ -5,7 +5,7 @@ void setup() {
   diametro = 20;
   margem = 4;
   smooth();
-  frameRate(10); //para ajustar depois conforme a velocidade que se pretenda
+  frameRate(8); //para ajustar depois conforme a velocidade que se pretenda
 }
  
 void draw() {
@@ -32,10 +32,11 @@ void drawCircle(float x, float y, float diam) { //função que desenha a matriz 
 
 void fillCircle() { //função que pinta os círculos
   fill(0);
-  int yaxis = (int)random(1,8); //valores que alteram a cor no eixo y
-  int contador1 = yaxis;
-  int contador2 = 9 - yaxis; // 9 para este exemplo com random até 8
-
+  int yaxis = (int)random(1,8); //valores que alteram a cor nos eixos x e y
+  //int contador1 = yaxis;
+  //int contador2 = 9 - yaxis; // 9 para este exemplo com random até 8
+  int contador1 = (int)random(1,8);
+  int contador2 = (int)random(1,8);
   
   if (yaxis > 4){ // eixo y maior
     for (int k = 0; k <= 9 - yaxis; k++){
@@ -45,7 +46,7 @@ void fillCircle() { //função que pinta os círculos
         ellipse(-1*k*(diametro+margem),i*(diametro+margem),diametro,diametro); //simetria
         ellipse(k*(diametro+margem),i*(diametro+margem),diametro,diametro); //simetria
       } 
-      contador1 = contador1 - 2;
+      contador1 = contador1 - 2; //alterar número para dar outros efeitos
     }
   }
   else { // eixo x maior
@@ -56,7 +57,7 @@ void fillCircle() { //função que pinta os círculos
         ellipse(i*(diametro+margem),-1*k*(diametro+margem),diametro,diametro); //simetria
         ellipse(i*(diametro+margem),k*(diametro+margem),diametro,diametro); //simetria
       }
-      contador2 = contador2 - 1; 
+      contador2 = contador2 - 2; //alterar número para dar outros efeitos
     }
   }
       
