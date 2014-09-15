@@ -1,19 +1,23 @@
-
-
-// Graphing sketch
-
-
-// This program takes ASCII-encoded strings
-
 import processing.serial.*;
 
 Serial myPort; 
 
 int xpos = 0;
-int ypos = 30;
-int interval = 1000;
+int ypos;
+int interval = 4000;
 
 int time = 0;
+int previousTime = 0;
+float raio;
+
+float inByte;
+
+float[] valsArr;
+
+float MAX = 700, MIN;
+int BEAT = 0;
+int tresMax = 30;
+
 void setup () {
   // set the window size:
   size(800, 300);        
@@ -22,26 +26,35 @@ void setup () {
   myPort = new Serial(this, "/dev/tty.usbserial-A9005bkU", 115200); //porta introduzida à unha
   myPort.bufferUntil('\n');
   background(0);
+  ypos = height/2;
+  noStroke();
+//  getVals(500);
+  getBeat();
 }
 void draw () {
 
 
-  if (millis()-time <= interval) {
-    background(0);
-    text(time, xpos, ypos);
+  if (time-previousTime <= interval) {
+
+    raio = inByte;
+    raio = map(raio, 300, 1100, 5, 200);
+    bola(xpos, ypos, raio);
+
+
     xpos = xpos+30;
-    
+
     if (xpos > width) {
+      background(0);
+      text (BEAT, 70, 30, 90);
+      text (MAX, 30, 30, 50);
+      text (MIN, 30, 70, 50);
       xpos = 0;
-      ypos = ypos+10;
     }
   }
-  if (millis()-time >= interval) {
-    ypos = 30;
-    
+  if (time-previousTime >= interval) {
+    previousTime = time;
   }
-
-time = millis();
+  time = millis();
 }
 
 void serialEvent (Serial myPort) {
@@ -52,7 +65,50 @@ void serialEvent (Serial myPort) {
     // trim off any whitespace:
     inString = trim(inString);
     // convert to an int and map to the screen height:
-    float inByte = float(inString);
+    inByte = float(inString);
   }
 }
+
+void bola(int xposi, int yposi, float raioi) {
+
+  ellipse(xposi, yposi, raioi, raioi);
+}
+
+
+
+void getVals (int arraySize) {
+
+
+  for (int i=0; i<arraySize; i++) {
+    valsArr[i] = inByte;
+  }
+
+  for (int l=0; l<arraySize; l++) {
+    if (l !=0 ) {
+      if (valsArr[l] > valsArr[l-1]) {
+        MAX = valsArr[l];
+      }
+      if (valsArr[l] < valsArr[l-1]) {
+        MIN = valsArr[l];
+      }
+    }
+  }
+}
+
+void getBeat() {
+
+  if (time-previousTime <= interval) {
+    if (inByte > MAX-tresMax) {
+
+      BEAT++;
+    }
+  }
+
+  if (time-previousTime >= interval) {
+    previousTime = time;
+  }
+  time = millis();
+}
+
+
 
