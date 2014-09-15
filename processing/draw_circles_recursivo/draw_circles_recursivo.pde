@@ -1,9 +1,10 @@
-int diametro, margem;
+int diametro, margem, heartbeat;
 
 void setup() {
   size(640,480);
   diametro = 20;
   margem = 4;
+  heartbeat = 1;
   smooth();
   frameRate(8); //para ajustar depois conforme a velocidade que se pretenda
 }
@@ -41,6 +42,15 @@ void fillCircle() { //função que pinta os círculos
   if (yaxis > 4){ // eixo y maior
     for (int k = 0; k <= 9 - yaxis; k++){
       for (int i = 0; i <= contador1; i++){ //pinta eixo y
+        if (heartbeat == 20) {
+          fill(255);
+          heartbeat = 0;
+        }
+        else {
+          fill(0);
+          heartbeat++;
+        }
+          
         ellipse(-1*k*(diametro+margem),-1*i*(diametro+margem),diametro,diametro);
         ellipse(k*(diametro+margem),-1*i*(diametro+margem),diametro,diametro); //simetria
         ellipse(-1*k*(diametro+margem),i*(diametro+margem),diametro,diametro); //simetria
