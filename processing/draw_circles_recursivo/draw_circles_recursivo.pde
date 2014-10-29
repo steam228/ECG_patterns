@@ -40,8 +40,8 @@ void fillCircle() { //função que pinta os círculos
   int yaxis = (int)random(1,8); //valores que alteram a cor nos eixos x e y
   //int contador1 = yaxis;
   //int contador2 = 9 - yaxis; // 9 para este exemplo com random até 8
-  int contador1 = (int)random(1,8);
-  int contador2 = (int)random(1,8);
+  int contador1 = yaxis; //(int)random(1,8);
+  int contador2 = yaxis; //(int)random(1,8);
   
   if (yaxis > 4){ // eixo y maior
     for (int k = 0; k <= 9 - yaxis; k++){
