@@ -133,12 +133,18 @@ void fillRect() { //função que pinta os círculos
         // código para carregar svgs
         Aleatorio();
         shape(quadrado, -1*k*(lado+margem)-lado/2,-1*i*(lado+margem)-lado/2,lado,lado);
-        Aleatorio();
-        shape(quadrado, k*(lado+margem)-lado/2,-1*i*(lado+margem)-lado/2,lado,lado); //simetria
-        Aleatorio();
-        shape(quadrado, -1*k*(lado+margem)-lado/2,i*(lado+margem)-lado/2,lado,lado); //simetria
-        Aleatorio();
-        shape(quadrado, k*(lado+margem)-lado/2,i*(lado+margem)-lado/2,lado,lado); //simetria
+        if (k != 0){  
+          Aleatorio();
+          shape(quadrado, k*(lado+margem)-lado/2,-1*i*(lado+margem)-lado/2,lado,lado); //simetria
+        }
+        if (i != 0){  
+          Aleatorio();
+          shape(quadrado, -1*k*(lado+margem)-lado/2,i*(lado+margem)-lado/2,lado,lado); //simetria
+        }
+        if ( k != 0 && i != 0){
+          Aleatorio();
+          shape(quadrado, k*(lado+margem)-lado/2,i*(lado+margem)-lado/2,lado,lado); //simetria
+        }
       } 
       contador1 = contador1 - 2; //alterar número para dar outros efeitos
     }
@@ -160,12 +166,18 @@ void fillRect() { //função que pinta os círculos
         // código para carregar svgs
         Aleatorio();
         shape(quadrado, -1*i*(lado+margem)-lado/2,-1*k*(lado+margem)-lado/2,lado,lado);
-        Aleatorio();
-        shape(quadrado, -1*i*(lado+margem)-lado/2,k*(lado+margem)-lado/2,lado,lado); //simetria
-        Aleatorio();
-        shape(quadrado, i*(lado+margem)-lado/2,-1*k*(lado+margem)-lado/2,lado,lado); //simetria
-        Aleatorio();
-        shape(quadrado, i*(lado+margem)-lado/2,k*(lado+margem)-lado/2,lado,lado); //simetria
+        if (k != 0){ 
+          Aleatorio();
+          shape(quadrado, -1*i*(lado+margem)-lado/2,k*(lado+margem)-lado/2,lado,lado); //simetria
+        }
+        if (i != 0){  
+          Aleatorio();
+          shape(quadrado, i*(lado+margem)-lado/2,-1*k*(lado+margem)-lado/2,lado,lado); //simetria
+        }
+        if ( k != 0 && i != 0){
+          Aleatorio();
+          shape(quadrado, i*(lado+margem)-lado/2,k*(lado+margem)-lado/2,lado,lado); //simetria
+        }
       }
       contador2 = contador2 - 2; //alterar número para dar outros efeitos
     }
