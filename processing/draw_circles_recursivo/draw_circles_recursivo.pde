@@ -2,7 +2,7 @@ import processing.serial.*;
 int diametro, margem, heartbeat, lado;
 
 Serial myPort; 
-PShape quadrado;
+PShape quadrado, quadrado1, quadrado2, quadrado3, quadrado4, quadrado5;
 
 
 void setup() {
@@ -13,7 +13,11 @@ void setup() {
   heartbeat = 1;
   smooth();
   frameRate(8); //para ajustar depois conforme a velocidade que se pretenda
-  quadrado = loadShape("quadrado.svg");
+  quadrado1 = loadShape("quadrado.svg");
+  quadrado2 = loadShape("quadrado2.svg");
+  quadrado3 = loadShape("quadrado3.svg");
+  quadrado4 = loadShape("quadrado4.svg");
+  quadrado5 = loadShape("quadrado5.svg");
 }
  
 void draw() {
@@ -124,11 +128,16 @@ void fillRect() { //função que pinta os círculos
         rect(k*(lado+margem)-lado/2,-1*i*(lado+margem)-lado/2,lado,lado); //simetria
         rect(-1*k*(lado+margem)-lado/2,i*(lado+margem)-lado/2,lado,lado); //simetria
         rect(k*(lado+margem)-lado/2,i*(lado+margem)-lado/2,lado,lado); //simetria */
-        
+         
+          
         // código para carregar svgs
+        Aleatorio();
         shape(quadrado, -1*k*(lado+margem)-lado/2,-1*i*(lado+margem)-lado/2,lado,lado);
+        Aleatorio();
         shape(quadrado, k*(lado+margem)-lado/2,-1*i*(lado+margem)-lado/2,lado,lado); //simetria
+        Aleatorio();
         shape(quadrado, -1*k*(lado+margem)-lado/2,i*(lado+margem)-lado/2,lado,lado); //simetria
+        Aleatorio();
         shape(quadrado, k*(lado+margem)-lado/2,i*(lado+margem)-lado/2,lado,lado); //simetria
       } 
       contador1 = contador1 - 2; //alterar número para dar outros efeitos
@@ -145,14 +154,36 @@ void fillRect() { //função que pinta os círculos
         //rect(quadrado, i*(lado+margem)-lado/2,k*(lado+margem)-lado/2,lado,lado); //simetria
       
       
+      
+      
+      
         // código para carregar svgs
+        Aleatorio();
         shape(quadrado, -1*i*(lado+margem)-lado/2,-1*k*(lado+margem)-lado/2,lado,lado);
+        Aleatorio();
         shape(quadrado, -1*i*(lado+margem)-lado/2,k*(lado+margem)-lado/2,lado,lado); //simetria
+        Aleatorio();
         shape(quadrado, i*(lado+margem)-lado/2,-1*k*(lado+margem)-lado/2,lado,lado); //simetria
+        Aleatorio();
         shape(quadrado, i*(lado+margem)-lado/2,k*(lado+margem)-lado/2,lado,lado); //simetria
       }
       contador2 = contador2 - 2; //alterar número para dar outros efeitos
     }
   }
       
+}
+
+void Aleatorio() { //função que desenha a matriz de círculos
+
+        int aleatorio = (int)random(1,5);
+        if (aleatorio == 1)
+          quadrado = quadrado1;
+        else if (aleatorio == 2)
+          quadrado = quadrado2;
+        else if (aleatorio == 3)
+          quadrado = quadrado3;        
+        else if (aleatorio == 4)
+          quadrado = quadrado4;        
+        else if (aleatorio == 5)
+          quadrado = quadrado5; 
 }
