@@ -1,5 +1,5 @@
 import processing.serial.*;
-int diametro, margem, heartbeat, lado;
+int diametro, margem, heartbeat, lado, moldura, nquadrados;
 
 Serial myPort; 
 PShape quadrado, quadrado1, quadrado2, quadrado3, quadrado4, quadrado5;
@@ -8,9 +8,11 @@ PShape quadrado, quadrado1, quadrado2, quadrado3, quadrado4, quadrado5;
 void setup() {
   size(640,480);
   diametro = 20;
-  lado = 20;
-  margem = 4;
+  nquadrados = 11; //variável que ficará com o nº quadrados escolhido pelo utilizador
+  margem = 0; // margem entre quadrados dentro da janela
   heartbeat = 1;
+  moldura = 400; //tamanho da janela onde vai ficar a matriz
+  lado = moldura/nquadrados;
   smooth();
   frameRate(8); //para ajustar depois conforme a velocidade que se pretenda
   quadrado1 = loadShape("quadrado.svg");
@@ -29,7 +31,8 @@ void draw() {
     drawCircle(0,i,diametro);
   for (int i = 0; i >= (-1*height/2 + diametro/2 + margem); i = (i - diametro - margem))
     drawCircle(0,i,diametro);*/
-    
+  
+  //código se a matriz for feita de quadrados  
   for (int i = 0; i <= (height/2 - lado/2 - margem); i = (i + lado + margem))
     drawRect(0-lado/2,i-lado/2,lado);
   for (int i = 0; i >= (-1*height/2 + lado/2 + margem); i = (i - lado - margem))
@@ -53,12 +56,23 @@ void drawRect(float x, float y, float side) { //função que desenha a matriz de
   stroke(0);
   noFill();
   rect(x, y, side, side);
-  if(-1*x + side + margem < width/2 - margem){
+  /*if(-1*x + side + margem < width/2 - margem){
     rect(-1*x + margem, y, side, side);
   }
   if(x - side - margem > -1*width/2 + margem){
     drawRect(x - side - margem, y, side);  
+  }*/
+  
+  
+  // não percebi ainda porque a matriz fica desproporcionada se número de quadrados for >= 11x11
+
+  if(-1*x + side + margem < moldura/2 - margem){
+    rect(-1*x + margem, y, side, side);
   }
+  if(x - side - margem > -1*moldura/2 + margem){
+    drawRect(x - side - margem, y, side);
+  }
+  
 }
 
 void fillCircle() { //função que pinta os círculos
@@ -105,14 +119,15 @@ void fillCircle() { //função que pinta os círculos
 
 void fillRect() { //função que pinta os círculos
   fill(0);
-  int yaxis = (int)random(1,8); //valores que alteram a cor nos eixos x e y
+  int resto = ceil(nquadrados/2); //apenas para este cenário com números random
+  int yaxis = (int)random(1,(resto+1)); //valores que alteram a cor nos eixos x e y
   //int contador1 = yaxis;
   //int contador2 = 9 - yaxis; // 9 para este exemplo com random até 8
-  int contador1 = yaxis; //(int)random(1,8);
-  int contador2 = yaxis; //(int)random(1,8);
+  int contador1 = resto; //(int)random(1,8);
+  int contador2 = resto; //(int)random(1,8);
   
-  if (yaxis > 4){ // eixo y maior
-    for (int k = 0; k <= 9 - yaxis; k++){
+  if (yaxis > floor(resto/2)){ // eixo y maior
+    for (int k = 0; k <= resto - yaxis; k++){
       for (int i = 0; i <= contador1; i++){ //pinta eixo y
         if (heartbeat == 20) {
           fill(255);
@@ -150,7 +165,7 @@ void fillRect() { //função que pinta os círculos
     }
   }
   else { // eixo x maior
-    for (int k = 0; k <= 9 - yaxis; k++){
+    for (int k = 0; k <= resto - yaxis; k++){
       for (int i = 0; i <= contador2; i++){ //pinta eixo y
       
         // código para pintar quadrados
@@ -159,9 +174,7 @@ void fillRect() { //função que pinta os círculos
         //rect(quadrado, i*(lado+margem)-lado/2,-1*k*(lado+margem)-lado/2,lado,lado); //simetria
         //rect(quadrado, i*(lado+margem)-lado/2,k*(lado+margem)-lado/2,lado,lado); //simetria
       
-      
-      
-      
+           
       
         // código para carregar svgs
         Aleatorio();
