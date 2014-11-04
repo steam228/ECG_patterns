@@ -19,7 +19,7 @@ void loop() {
 
 
   Serial.println(bat);
-  delay(1);
+  delay(50);
 
 
 

@@ -1,6 +1,7 @@
 import processing.serial.*;
 int diametro, margem, heartbeat;
-
+float inByte;
+int beat;
 Serial myPort; 
 
 
@@ -10,7 +11,17 @@ void setup() {
   margem = 4;
   heartbeat = 1;
   smooth();
-  frameRate(8); //para ajustar depois conforme a velocidade que se pretenda
+  //frameRate(8); //para ajustar depois conforme a velocidade que se pretenda
+   
+  println(Serial.list());
+  // I know that the first port in the serial list on my mac
+  // is always my  Arduino, so I open Serial.list()[0].
+  // Open whatever port is the one you're using.
+  //myPort = new Serial(this, Serial.list()[0], 115200);
+  myPort = new Serial(this, "/dev/tty.usbserial-A9005bkU", 115200); // Serial.list()[0], 115200);
+  // don't generate a serialEvent() unless you get a newline character:
+  myPort.bufferUntil('\n');
+  
 }
  
 void draw() {
@@ -37,11 +48,12 @@ void drawCircle(float x, float y, float diam) { //função que desenha a matriz 
 
 void fillCircle() { //função que pinta os círculos
   fill(0);
-  int yaxis = (int)random(1,8); //valores que alteram a cor nos eixos x e y
+  
+  int yaxis = beat; //valores que alteram a cor nos eixos x e y
   //int contador1 = yaxis;
   //int contador2 = 9 - yaxis; // 9 para este exemplo com random até 8
-  int contador1 = (int)random(1,8);
-  int contador2 = (int)random(1,8);
+  int contador1 = beat;
+  int contador2 = beat;
   
   if (yaxis > 4){ // eixo y maior
     for (int k = 0; k <= 9 - yaxis; k++){
@@ -76,3 +88,20 @@ void fillCircle() { //função que pinta os círculos
   }
       
 }
+
+void serialEvent (Serial myPort) {
+  // get the ASCII string:
+  String inString = myPort.readStringUntil('\n');
+  
+  if (inString != null) {
+    // trim off any whitespace:
+    inString = trim(inString);
+    // convert to an int and map to the screen height:
+    inByte = float(inString);
+    inByte = map(inByte, 350, 650, 0, 9);
+    beat = (int)inByte;
+    println(beat);
+
+    }
+  }
+
