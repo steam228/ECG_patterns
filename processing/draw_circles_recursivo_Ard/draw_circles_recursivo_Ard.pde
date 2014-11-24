@@ -14,6 +14,9 @@ int inByte;
 
 String inString;
 
+int arrayVals[];
+int arrayTam;
+
 
 
 
@@ -40,6 +43,7 @@ void setup() {
   maxBat = 0;
   minBat = 1023;
   inByte = 0;
+  arrayTam = 0;
 
 
   time = millis();
@@ -48,7 +52,11 @@ void setup() {
 void draw() {
   background(255);
   translate(width/2, height/2); // coloca a coordenada (0,0) no centro do ecrã
-
+  if (arrayTam == 3000) {
+      analisa();
+      println ("max:  ", maxBat);
+      println ("min:  ", minBat);
+    }
   //código se a matriz for feita de círculos
   /*for (int i = 0; i <= (height/2 - diametro/2 - margem); i = (i + diametro + margem))
    drawCircle(0,i,diametro);
@@ -76,35 +84,21 @@ void drawCircle(float x, float y, float diam) { //função que desenha a matriz 
 
 void serialEvent (Serial myPort) {
   // get the ASCII string:
-  if (millis() - time < 6000) { 
-    inString = myPort.readStringUntil('\n');
-    println ("tudo OK");
-    println(inString);
-    if (inString != null) {
-      inString = trim(inString);
-      inByte = int(inString);
-      println("INNNI: ", inByte);
 
-      if (inByte > maxBat) {
-        maxBat = inByte;
-        println("MMMMMMMMMMMMMMMMMMM:   ", maxBat);
-      } else if (inByte < minBat) {
-        minBat = inByte;
-        println("mmmmmmmmmmmmmmmmmm:   ", minBat);
-      }
-    }
+
+
+  inString = myPort.readStringUntil('\n');
+
+  if (inString != null) {
+    inString = trim(inString);
+    inByte = int(inString);
+    println(inByte);
+    if (arrayTam < 3000) {
+      arrayVals[arrayTam] = inByte;
+      arrayTam++;
+    } 
   }
-    println ("max:  ", maxBat);
-    println ("min:  ", minBat);
-
-    inString = myPort.readStringUntil('\n');
-
-    if (inString != null) {
-      inString = trim(inString);
-      inByte = int(inString);
-      println(inByte);
-    }
-  }
+}
 
 
 void drawRect(float x, float y, float side) { //função que desenha a matriz de rectângulos
@@ -260,4 +254,25 @@ void Aleatorio() { //escolhe aleatoriamente o svg a apresentar
   else if (aleatorio == 5)
     quadrado = quadrado5;
 }
+
+void analisa() {
+
+  maxBat = arrayVals[0];
+  minBat = arrayVals[0];
+
+  for (int i = 1; i < arrayVals.length; i++) {
+    if (arrayVals [i] > maxBat) {
+
+      maxBat = arrayVals[i];
+    }
+
+    if (arrayVals [i] < minBat) {  
+      minBat = arrayVals[i];
+    }
+  }
+}
+
+
+
+
 
