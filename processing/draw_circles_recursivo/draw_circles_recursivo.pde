@@ -8,7 +8,7 @@ PShape quadrado, quadrado1, quadrado2, quadrado3, quadrado4, quadrado5;
 void setup() {
   size(640,480);
   diametro = 20;
-  nquadrados = 11; //variável que ficará com o nº quadrados escolhido pelo utilizador
+  nquadrados = 9; //variável que ficará com o nº quadrados escolhido pelo utilizador
   margem = 0; // margem entre quadrados dentro da janela
   heartbeat = 1;
   moldura = 400; //tamanho da janela onde vai ficar a matriz
@@ -117,7 +117,7 @@ void fillCircle() { //função que pinta os círculos
       
 }
 
-void fillRect() { //função que pinta os círculos
+void fillRect() { //função que pinta os rectãngulos
   fill(0);
   int resto = ceil(nquadrados/2); //apenas para este cenário com números random
   int yaxis = (int)random(1,(resto+1)); //valores que alteram a cor nos eixos x e y
@@ -198,7 +198,7 @@ void fillRect() { //função que pinta os círculos
       
 }
 
-void Aleatorio() { //função que desenha a matriz de círculos
+void Aleatorio() { //escolhe aleatoriamente o svg a apresentar
 
         int aleatorio = (int)random(1,5);
         if (aleatorio == 1)
