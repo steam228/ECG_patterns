@@ -1,5 +1,5 @@
 import processing.serial.*;
-int diametro, margem, heartbeat, lado, moldura, nquadrados;
+int diametro, margem, heartbeat, lado, moldura, nquadrados, valormax, valormin, indice, ecgvalue;
 
 
 PShape quadrado, quadrado1, quadrado2, quadrado3, quadrado4, quadrado5;
@@ -17,16 +17,20 @@ String inString;
 int arrayVals[];
 int arrayTam;
 
+int dados[];
+
 
 
 
 void setup() {
   size(640, 480);
   diametro = 20;
-  nquadrados = 9; //variável que ficará com o nº quadrados escolhido pelo utilizador
+  nquadrados = 13; //variável que ficará com o nº quadrados escolhido pelo utilizador
   margem = 0; // margem entre quadrados dentro da janela
   heartbeat = 1;
   moldura = 400; //tamanho da janela onde vai ficar a matriz
+  indice = 0;
+  ecgvalue = 0;
   lado = moldura/nquadrados;
   smooth();
   frameRate(8); //para ajustar depois conforme a velocidade que se pretenda
@@ -47,6 +51,31 @@ void setup() {
 
 
   time = millis();
+  
+  //************************************************************************************************************************
+  // Parcela de código que carrega números num txt para um array de ints, para simular o ECG *****
+  // e calcula o valor máximo e mínimo
+  
+  // Load text file as a string
+  String[] stuff = loadStrings("dados.txt");
+  // Convert string into an array of integers using ',' as a delimiter
+  dados = int(split(stuff[0],','));
+  
+  valormax = dados[0];
+  valormin = dados[0];
+  
+  for (int i=1; i < dados.length; i++){
+    if (dados[i] > valormax)
+      valormax = dados[i];
+    if (dados[i] < valormin)
+      valormin = dados[i];   
+  }
+  
+  println("max :", valormax);
+  println("min :", valormin);  
+  
+ // ************************************************************************************************************************ 
+  
 }
 
 void draw() {
@@ -165,7 +194,16 @@ void fillCircle() { //função que pinta os círculos
 void fillRect() { //função que pinta os rectãngulos
   fill(0);
   int resto = ceil(nquadrados/2); //apenas para este cenário com números random
-  int yaxis = (int)random(1, (resto+1)); //valores que alteram a cor nos eixos x e y
+  //int yaxis = (int)random(1, (resto+1)); //valores que alteram a cor nos eixos x e y
+  
+  if (indice < dados.length){
+    ecgvalue = dados[indice];
+    indice++;
+  }
+  else
+    indice = 0;
+  
+  int yaxis = (int)map(ecgvalue, valormin, valormax, 1, (resto+1));
   //int contador1 = yaxis;
   //int contador2 = 9 - yaxis; // 9 para este exemplo com random até 8
   int contador1 = resto; //(int)random(1,8);
