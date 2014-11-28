@@ -12,7 +12,8 @@ int maxBat, minBat;
 int time;
 int inByte;
 
-String inString;
+String inString; //string para carregar valores a partir de ficheiro txt
+Table table; //tabela para carregar valores a partir de ficheiro csv
 
 int arrayVals[];
 int arrayTam;
@@ -22,10 +23,12 @@ int dados[];
 
 
 
+
+
 void setup() {
   size(640, 480);
   diametro = 20;
-  nquadrados = 13; //variável que ficará com o nº quadrados escolhido pelo utilizador
+  nquadrados = 21; //variável que ficará com o nº quadrados escolhido pelo utilizador
   margem = 0; // margem entre quadrados dentro da janela
   heartbeat = 1;
   moldura = 400; //tamanho da janela onde vai ficar a matriz
@@ -33,7 +36,7 @@ void setup() {
   ecgvalue = 0;
   lado = moldura/nquadrados;
   smooth();
-  frameRate(8); //para ajustar depois conforme a velocidade que se pretenda
+  frameRate(20); //para ajustar depois conforme a velocidade que se pretenda
   quadrado1 = loadShape("quadrado.svg");
   quadrado2 = loadShape("quadrado2.svg");
   quadrado3 = loadShape("quadrado3.svg");
@@ -53,13 +56,17 @@ void setup() {
   time = millis();
   
   //************************************************************************************************************************
-  // Parcela de código que carrega números num txt para um array de ints, para simular o ECG *****
+  // Parcela de código que carrega números de um txt para um array de ints, para simular o ECG *****
   // e calcula o valor máximo e mínimo
   
   // Load text file as a string
-  String[] stuff = loadStrings("dados.txt");
+  //String[] stuff = loadStrings("Workbook.csv");
   // Convert string into an array of integers using ',' as a delimiter
-  dados = int(split(stuff[0],','));
+  //dados = int(split(stuff[0],' '));
+
+  /*for (int i=0; i < table.getRowCount(); i++)
+    dados[i] = table.getInt(i,0);
+
   
   valormax = dados[0];
   valormin = dados[0];
@@ -69,7 +76,27 @@ void setup() {
       valormax = dados[i];
     if (dados[i] < valormin)
       valormin = dados[i];   
-  }
+  }*/ 
+  
+ // ************************************************************************************************************************   
+  
+  
+   //************************************************************************************************************************
+  // Parcela de código que carrega números de um csv para uma tabela de ints, para simular o ECG *****
+  // e calcula o valor máximo e mínimo 
+  
+  
+  table = loadTable("Workbook.csv");
+  
+  valormax = table.getInt(0,0);
+  valormin = table.getInt(0,0);
+    
+  for (int i=1; i < table.getRowCount(); i++){
+    if (table.getInt(i,0) > valormax)
+      valormax = table.getInt(i,0);
+    if (table.getInt(i,0) < valormin)
+      valormin = table.getInt(i,0);   
+  }  
   
   println("max :", valormax);
   println("min :", valormin);  
@@ -193,15 +220,26 @@ void fillCircle() { //função que pinta os círculos
 
 void fillRect() { //função que pinta os rectãngulos
   fill(0);
-  int resto = ceil(nquadrados/2); //apenas para este cenário com números random
+  int resto = ceil(nquadrados/2); //para adaptar valores ao tamanho da matriz, ou seja número de quadrados utilizados
   //int yaxis = (int)random(1, (resto+1)); //valores que alteram a cor nos eixos x e y
   
-  if (indice < dados.length){
-    ecgvalue = dados[indice];
+  
+  // parcela de código para calcular ecgvalue se estivermos a usar tabela de ints carregados a partir de csv    
+  
+  if (indice < table.getRowCount()){
+    ecgvalue = table.getInt(indice,0);
     indice++;
   }
   else
     indice = 0;
+    
+  // parcela de código para calcular ecgvalue se estivermos a usar array de ints carregados a partir de txt  
+  /*if (indice < dados.length){
+    ecgvalue = dados[indice];
+    indice++;
+  }
+  else
+    indice = 0;*/
   
   int yaxis = (int)map(ecgvalue, valormin, valormax, 1, (resto+1));
   //int contador1 = yaxis;
