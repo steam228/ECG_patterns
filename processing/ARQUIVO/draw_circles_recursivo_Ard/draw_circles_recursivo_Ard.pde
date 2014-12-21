@@ -44,8 +44,8 @@ void setup() {
   quadrado5 = loadShape("quadrado5.svg");
 
   //Serial com
-  println(Serial.list()); 
-  myPort = new Serial(this, Serial.list()[3], 115200);
+  //println(Serial.list()); 
+  //myPort = new Serial(this, Serial.list()[3], 115200);
 
   maxBat = 0;
   minBat = 1023;
@@ -347,8 +347,3 @@ void analisa() {
     }
   }
 }
-
-
-
-
-
