@@ -4,22 +4,29 @@ int radius;
 int vertices;
 int rotation;
 
+String newfilename;
+int fileNumber;
+String Numberfile;
+String fileNamebase;
 
-int traco = 4; // nao conta exteriencias
+boolean doSth = true;
 
 void setup() {
   frameRate(8);
-  size(800, 600);
-  beginRecord(PDF, "fulano1.pdf"); 
+  size(1024, 720);
+  newfilename = "fulano1";
+  fileNamebase = "fulano";
+  fileNumber = 0;
+  beginRecord(PDF, newfilename); 
 
 
 }
 
 void draw() {
-  background(0);
-  noStroke();
-  noFill();
-  strokeWeight(2);
+  
+  if (doSth == true) {
+  background(30);
+  strokeWeight(1);
   rotation = int(random(5));
   rotation = int(map(rotation, 0, 5, 0, 360));
 
@@ -59,6 +66,19 @@ void draw() {
   popMatrix();
 }
 
+else {
+endRecord();
+fileNumber++;
+Numberfile = str(fileNumber);
+newfilename = fileNamebase + Numberfile + ".pdf";
+beginRecord(PDF, newfilename);
+doSth = true;
+
+}
+
+}
+
+
 void polygon(float x, float y) {
 
 
@@ -68,12 +88,14 @@ void polygon(float x, float y) {
   vertices = int(map(vertices, 0, 7, 3, 8));
 
     int fille = int(random(25));
-    fille = int(map(fille, 0, 25, 220, 255));
+    fille = int(map(fille, 0, 25, 235, 255));
     int opa = int(random(25));
-    opa = int(map(opa, 0, 25, 150, 255));
+    opa = int(map(opa, 0, 25, 200, 220));
+    stroke(fille);
     fill(fille, opa);
+    
 
-    traco = 4;
+
     
 
   float angle = TWO_PI / vertices;
@@ -90,7 +112,6 @@ void polygon(float x, float y) {
 //fazer PDF
 void keyPressed() {
   if (key == 'q') {
-    endRecord();
-    exit();
+doSth = false;
   }
 }
