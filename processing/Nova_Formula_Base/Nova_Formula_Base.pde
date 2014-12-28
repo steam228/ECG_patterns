@@ -96,58 +96,34 @@ void draw() {
   pushMatrix();
   translate(width*0.2, height*0.5);
   rotate(rotation);
-<<<<<<< Updated upstream
   polygon(0, 0, vertices1);
   rotate(rotation);
   polygon(0, 0, vertices2);
-=======
-  polygon(0, 0);
-  rotate(rotation*2);
-  polygon(0, 0);
->>>>>>> Stashed changes
   popMatrix();
 
   pushMatrix();
   translate(width*0.4, height*0.5);
   rotate(rotation);
-<<<<<<< Updated upstream
   polygon(0, 0, vertices3);
   rotate(rotation);
   polygon(0, 0, vertices4);
-=======
-  polygon(0, 0);
-  rotate(rotation*2);
-  polygon(0, 0);
->>>>>>> Stashed changes
   popMatrix();
 
 
   pushMatrix();
   translate(width*0.6, height*0.5);
   rotate(rotation);
-<<<<<<< Updated upstream
   polygon(0, 0, vertices5);
   rotate(rotation);
   polygon(0, 0, vertices6);
-=======
-  polygon(0, 0);
-  rotate(rotation*2);
-  polygon(0, 0);
->>>>>>> Stashed changes
   popMatrix();
 
   pushMatrix();
   translate(width*0.8, height*0.5);
   rotate(rotation);
-<<<<<<< Updated upstream
   polygon(0, 0, vertices7);
   rotate(rotation);
   polygon(0, 0, vertices8);
-=======
-  polygon(0, 0);
-  rotate(rotation*2);
-  polygon(0, 0);
->>>>>>> Stashed changes
   popMatrix();
 }
 

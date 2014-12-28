@@ -13,8 +13,8 @@ void draw(){
   translate(0,height/2);
   x++;
   x%=width;
-  float fx = py + random(-10,10);
-  stroke(255);
+  float fx = py + random(-20,20);
+  stroke(100,255,100);
   noFill();
   line(x-1,py, x,fx);
   py = fx;
