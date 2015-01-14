@@ -50,29 +50,16 @@ void serialEvent (Serial myPort) {
     inByte = map(inByte, 0, 1023, 0, height);
 
     // draw the line:
-    stroke(100, 255, 100);
-    fill(100, 255, 100);
-    ellipse(xPos, height - inByte, 2, 2);
-    line(xPos-1, previousY, xPos, height - inByte);
-    previousY = height-inByte;
+    stroke(127, 34, 255);
+    line(xPos, height, xPos, height - inByte);
 
     // at the edge of the screen, go back to the beginning:
     if (xPos >= width) {
       xPos = 0;
       background(0);
     } else {
-      delay(5);
-      noStroke();
-      fill(0, 0, 0, 15);
-      rect(0, 0, width, height);
-      translate(0, height/2);
-      xPos++;
-    }
+      // increment the horizontal position:
+     xPos++;
+   }
   }
-}
-
-void delay(int delay)
-{
-  int time = millis();
-  while (millis () - time <= delay);
 }
