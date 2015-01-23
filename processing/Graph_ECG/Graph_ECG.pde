@@ -28,7 +28,7 @@ void setup () {
   // is always my  Arduino, so I open Serial.list()[0].
   // Open whatever port is the one you're using.
   //myPort = new Serial(this, Serial.list()[0], 115200);
-  myPort = new Serial(this, "/dev/tty.usbserial-A9005bkU", 115200); // Serial.list()[0], 115200);
+  myPort = new Serial(this, Serial.list()[7], 115200);
   // don't generate a serialEvent() unless you get a newline character:
   myPort.bufferUntil('\n');
   // set inital background:
@@ -45,6 +45,7 @@ void serialEvent (Serial myPort) {
   if (inString != null) {
     // trim off any whitespace:
     inString = trim(inString);
+    inString = inString.substring(1); 
     // convert to an int and map to the screen height:
     float inByte = float(inString); 
     inByte = map(inByte, 0, 1023, 0, height);
